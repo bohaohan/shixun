@@ -10,7 +10,7 @@ description text,
 category varchar(100)																																					
 )
 
-create table user (
+create table users (
 user_id serial primary key,
 username varchar(100),
 password varchar(30),
@@ -20,7 +20,7 @@ address varchar(100),
 phone varchar(100),
 birthday date,
 email varchar(100)																																					
-)
+);
 
 create table shopcar (
 id serial primary key,
@@ -28,9 +28,9 @@ user_id int,
 book_id int,
 add_date date,
 num int,
-foreign key user_id references user(user_id),
-foreign key book_id references book(book_id)																																				
-)
+foreign key (user_id) references users(user_id),
+foreign key (book_id) references book(book_id)																																				
+);
 
 create table comments (
 id serial primary key,
@@ -38,9 +38,9 @@ user_id int,
 book_id int,
 comment_date date,
 content text,
-foreign key user_id references user(user_id),
-foreign key book_id references book(book_id)																																				
-)
+foreign key (user_id) references users(user_id),
+foreign key (book_id) references book(book_id)																																				
+);
 
 
 
