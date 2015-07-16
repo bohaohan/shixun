@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+ <package name="users" namespace="/" extends="struts-default">
+  
+  <action name="listUser" class="Action.ListUserAction">
+   <result name="success">/success.jsp</result>
+   <result name = "error">/Error.jsp</result>
+  </action>
+  <action name = "listSingleUser" class = "Action.ListUserAction" method = "findSingle">
+      <result name = "success">/information.jsp</result>
+  </action>
+  <action name="saveUser" class="Action.ListUserAction" method = "save">
+   <result name="success">/login.jsp</result>
+  </action>
+  <action  name = "saveBook" class ="Action.ListBookAction" method = "save">
+  </action>
+  <action  name = "listBook" class = "Action.ListBookAction">
+      <result name = "success">/product.jsp</result>
+  </action>
+  <action  name = "listBookName" class="Action.ListBookAction" method = "findByName">
+      <result name = "success">/product.jsp</result>
+  </action>
+  <action name = "listBookPublish" class = "Action.ListBookAction" method = "findByPublish">
+      <result name = "success">/product.jsp</result>
+  </action>
+   <action name = "listShopinfo" class = "Action.ListBookAction" method = "findByShopInfo">
+      <result name = "success">/product.jsp</result>
+  </action>
+  <action name ="listSingleBook" class = "Action.ListBookAction" method = "findSingle">
+      <result name = "success">/single.jsp</result>
+  </action>
+ </package>
+</struts>
