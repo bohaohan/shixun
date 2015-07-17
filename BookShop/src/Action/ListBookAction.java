@@ -1,8 +1,10 @@
 package Action;
 
+import java.io.File;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.struts2.ServletActionContext;
 
@@ -17,10 +19,38 @@ public class ListBookAction extends ActionSupport {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	// ÊµÀı»¯
+	// Êµï¿½ï¿½
 	private List<Book> list;
+	private List<Book> publishlist;
 	private Book book;
 	private BookService bookService;
+	private File file;
+	private String fileFileName;
+	private String fileContentType;
+
+	public File getFile() {
+		return file;
+	}
+
+	public void setFile(File file) {
+		this.file = file;
+	}
+
+	public String getFileFileName() {
+		return fileFileName;
+	}
+
+	public void setFileFileName(String fileFileName) {
+		this.fileFileName = fileFileName;
+	}
+
+	public String getFileContentType() {
+		return fileContentType;
+	}
+
+	public void setFileContentType(String fileContentType) {
+		this.fileContentType = fileContentType;
+	}
 
 	public BookService getBookService() {
 		return bookService;
@@ -46,7 +76,7 @@ public class ListBookAction extends ActionSupport {
 		this.book = book;
 	}
 
-	// ·µ»Øbook±í¸ñÖĞµÄËùÓĞÊı¾İ
+	// ï¿½ï¿½ï¿½ï¿½bookï¿½ï¿½ï¿½ï¿½Ğµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	public String execute() {
 
 		try {
@@ -54,6 +84,10 @@ public class ListBookAction extends ActionSupport {
 			HttpServletRequest request = ServletActionContext.getRequest();
 
 			request.setAttribute("list", list);
+			HttpSession session = ServletActionContext.getRequest()
+					.getSession();
+			session.setAttribute("list", list);
+
 			return SUCCESS;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -63,7 +97,7 @@ public class ListBookAction extends ActionSupport {
 
 	}
 
-	// ¸ù¾İÊéÃû·µ»Ø·ûºÏÌõ¼şµÄÊı¾İ
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ø·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	public String findByName() {
 		try {
 			list = bookService.findLikeByName(this.book.getBookname());
@@ -75,11 +109,29 @@ public class ListBookAction extends ActionSupport {
 		return ERROR;
 	}
 
-	// ¸ù¾İ³ö°æÉç·µ»Ø·ûºÏÌõ¼şµÄÊı¾İ
+	// é€šè¿‡å¯»æ‰¾å‡ºç‰ˆç¤¾æŸ¥æ‰¾ä¹¦ç±ç±»åˆ«
 	public String findByPublish() {
 		try {
-			list = bookService.findByPublish(this.book.getPublish());
-			return SUCCESS;
+			// URLä¼ å€¼ç”¨äº†GETæ–¹æ³•
+			HttpServletRequest request = ServletActionContext.getRequest();
+			if (request.getMethod().equals("GET")) {
+				// UTF-8è½¬ç 
+				request.setCharacterEncoding("utf-8");
+				System.out.println(request.getParameter("book.publish"));// åœ¨æ§åˆ¶å°çœ‹æµ‹è¯•èƒ½ä¸èƒ½è¾“å‡ºæ­£ç¡®çš„åœ°å€
+				list = bookService.findByPublish(request
+						.getParameter("book.publish"));
+				request.setAttribute("list", list);
+				return SUCCESS;
+
+			} else {
+
+				/*
+				 * list = bookService.findByPublish(this.book.getPublish());
+				 * request.setCharacterEncoding("utf-8");
+				 * 
+				 * request.setAttribute("list", list); return SUCCESS;
+				 */
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -87,9 +139,12 @@ public class ListBookAction extends ActionSupport {
 		return ERROR;
 	}
 
-	// ¸ù¾İÖ÷¼ü·µ»Øµ¥¸öbook¶ÔÏó
 	public String findSingle() {
 		try {
+			System.out.println("aaaaaa");
+
+			System.out.println(this.book.getImagepath());
+
 			list = bookService.findByPath(this.book.getImagepath());
 			HttpServletRequest request = ServletActionContext.getRequest();
 			request.setAttribute("list", list);
@@ -101,14 +156,87 @@ public class ListBookAction extends ActionSupport {
 		return ERROR;
 	}
 
-	// ´æ´¢µ¥¸öbook¶ÔÏó
-	public String save() {
+	// é€šè¿‡ä¹¦ç±åˆ†ç±»å¯»æ‰¾
+	public String findByCategory() {
 		try {
-			this.bookService.save(this.book);
-			return SUCCESS;
+			// URLä¼ å€¼ç”¨äº†GETæ–¹æ³•
+			HttpServletRequest request = ServletActionContext.getRequest();
+			if (request.getMethod().equals("GET")) {
+				// UTF-8è½¬ç 
+				request.setCharacterEncoding("utf-8");
+				System.out.println(request.getParameter("book.category"));// åœ¨æ§åˆ¶å°çœ‹æµ‹è¯•èƒ½ä¸èƒ½è¾“å‡ºæ­£ç¡®çš„åœ°å€
+				list = bookService.findByCategory(request
+						.getParameter("book.category"));
+				request.setAttribute("list", list);
+				return SUCCESS;
+
+			} else {
+				// è¿™POSTæ–¹æ³•ä¹Ÿç”¨åˆ°äº†ï¼Œæ˜¯åœ¨
+				list = bookService.findByCategory(this.book.getCategory());
+				request.setCharacterEncoding("utf-8");
+
+				request.setAttribute("list", list);
+				return SUCCESS;
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+
 		return ERROR;
 	}
+
+	public String findByAuthor() {
+		try {
+			// URLä¼ å€¼ç”¨äº†GETæ–¹æ³•
+			HttpServletRequest request = ServletActionContext.getRequest();
+			if (request.getMethod().equals("GET")) {
+				// UTF-8è½¬ç 
+				request.setCharacterEncoding("utf-8");
+				System.out.println(request.getParameter("book.author"));// åœ¨æ§åˆ¶å°çœ‹æµ‹è¯•èƒ½ä¸èƒ½è¾“å‡ºæ­£ç¡®çš„åœ°å€
+				list = bookService.findByAuthor(request
+						.getParameter("book.author"));
+				request.setAttribute("list", list);
+				return SUCCESS;
+
+			} else {
+				// è¿™POSTæ–¹æ³•ä¹Ÿç”¨åˆ°äº†ï¼Œæ˜¯åœ¨
+				list = bookService.findByAuthor(this.book.getAuthor());
+				request.setCharacterEncoding("utf-8");
+
+				request.setAttribute("list", list);
+				return SUCCESS;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return ERROR;
+	}
+
+	// å­˜å‚¨å•ä¸ªbookå¯¹è±¡
+	public String save() throws Exception {
+
+		if (file != null) {
+			String dataDir = "C:\\Users\\a\\Desktop\\images";// ä¸Šä¼ æ–‡ä»¶å­˜æ”¾çš„ç›®å½•
+			File savedFile = new File(dataDir, fileFileName);// ä¸Šä¼ æ–‡ä»¶åœ¨æœåŠ¡å™¨å…·ä½“çš„ä½ç½®
+			file.renameTo(savedFile);// å°†ä¸Šä¼ æ–‡ä»¶ä»ä¸´æ—¶æ–‡ä»¶å¤åˆ¶åˆ°æŒ‡å®šæ–‡ä»¶
+			this.book.setImagepath(savedFile.getAbsolutePath());
+			if (this.book.getImagepath() != "")
+				this.bookService.save(this.book);
+		} else {
+			return INPUT;
+		}
+
+		return SUCCESS;
+
+	}
+
+	public List<Book> getPublishlist() {
+		return publishlist;
+	}
+
+	public void setPublishlist(List<Book> publishlist) {
+		this.publishlist = publishlist;
+	}
+
 }

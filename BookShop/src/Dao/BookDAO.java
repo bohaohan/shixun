@@ -27,6 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class BookDAO {
 	private static final Logger log = LoggerFactory.getLogger(BookDAO.class);
 	// property constants
+	public static final String BOOKID = "book_id";
 	public static final String BOOKNAME = "bookname";
 	public static final String AUTHOR = "author";
 	public static final String IMAGEPATH = "imagepath";

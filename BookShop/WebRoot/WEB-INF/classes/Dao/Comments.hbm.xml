@@ -8,7 +8,7 @@
     <class name="Dao.Comments" table="comments" schema="public">
         <id name="id" type="java.lang.Integer">
             <column name="id" />
-            <generator class="assigned" />
+            <generator class="increment" />
         </id>
         <many-to-one name="book" class="Dao.Book" fetch="select">
             <column name="book_id" />

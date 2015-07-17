@@ -49,6 +49,16 @@ public class BookServiceImpl implements BookService {
 	public List<Book> findByPath(Object property) {
 		return this.bookDao.findByProperty("imagepath", property);
 	}
+	
+	@Override
+	public List<Book> findByCategory(Object property) {
+		return this.bookDao.findByProperty("category", property);
+	}
+	@Override
+	public List<Book> findByAuthor(Object property) {
+		return this.bookDao.findByProperty("author", property);
+	}
+	
 
 	public List<Book> findLikeByName(Object property) {
 		return this.bookDao.findLikeByName(property);

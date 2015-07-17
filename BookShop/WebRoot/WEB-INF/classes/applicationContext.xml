@@ -10,7 +10,7 @@
 		class="org.apache.commons.dbcp.BasicDataSource">
 		<property name="driverClassName" value="org.postgresql.Driver"/>
 		<property name="url"
-			value="jdbc:postgresql://localhost:5432/postgres">
+			value="jdbc:postgresql://localhost:5432/bookshop">
 		</property>
 		<property name="username" value="postgres"></property>
 		<property name="password" value="12345678"></property>
@@ -75,6 +75,22 @@
         <ref bean = "bookService"/>
     </property>
 </bean> 
+
+<bean id ="listBookCategoryAction" class = "Action.ListBookAction" scope = "prototype">
+    <property name ="bookService">
+        <ref bean = "bookService"/>
+    </property>
+</bean> 
+
+
+<bean id ="listBookAuthor" class = "Action.ListBookAction" scope = "prototype">
+    <property name ="bookService">
+        <ref bean = "bookService"/>
+    </property>
+</bean> 
+
+
+
 <bean id="saveUserAction" class="Action.ListUserAction" scope="prototype">
  <property name="userService">
   <ref bean="userService"/>

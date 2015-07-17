@@ -19,4 +19,8 @@ public interface BookService {
 
 	public List<Book> findByPath(Object property);
 
+	public List<Book> findByCategory(Object property);
+	
+	public List<Book> findByAuthor(Object property);
+
 }

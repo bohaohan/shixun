@@ -8,7 +8,7 @@
     <class name="Dao.Book" table="book" schema="public">
         <id name="bookId" type="java.lang.Integer">
             <column name="book_id" />
-            <generator class="assigned" />
+            <generator class="increment" />
         </id>
         <property name="bookname" type="java.lang.String">
             <column name="bookname" length="100" />

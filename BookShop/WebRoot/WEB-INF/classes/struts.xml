@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
 <struts>
+
  <package name="users" namespace="/" extends="struts-default">
   
   <action name="listUser" class="Action.ListUserAction">
@@ -24,6 +25,16 @@
   <action name = "listBookPublish" class = "Action.ListBookAction" method = "findByPublish">
       <result name = "success">/product.jsp</result>
   </action>
+  
+   <action name = "listBookCategory" class = "Action.ListBookAction" method = "findByCategory">
+      <result name = "success">/product.jsp</result>
+  </action>
+  
+  <action name = "listBookAuthor" class = "Action.ListBookAction" method = "findByAuthor">
+      <result name = "success">/product.jsp</result>
+  </action>
+  
+  
    <action name = "listShopinfo" class = "Action.ListBookAction" method = "findByShopInfo">
       <result name = "success">/product.jsp</result>
   </action>

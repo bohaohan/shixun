@@ -121,7 +121,11 @@
 				 </div>
 				 <s:iterator value = "#request.list" >
 				 <h6><s:property value="bookname"/></h6>
-			   	<p><s:property value="shopinfo"/></p>
+			   	<p><s:property value="author"/></p>
+			   	<p><s:property value="price"/></p>
+			   	<p><s:property value="quality"/></p>
+			   	<p><s:property value="category"/></p>
+			   	<p><s:property value="description"/></p>
 			   	</s:iterator>
 			   	</s:form>
 			   
